@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Studio Bela</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--rose-gold);
+        }
+        .admin-header h1 {
+            color: var(--brown-dark);
+        }
+        .logout-btn {
+            background: var(--rose-gold-light);
+            color: var(--brown);
+            padding: 10px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .logout-btn:hover {
+            background: var(--rose-gold);
+            color: white;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .stat-card h3 {
+            color: var(--brown);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--rose-gold-dark);
+        }
+        .filtros {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .filtro-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--rose-gold-light);
+            background: white;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filtro-btn.active {
+            background: var(--rose-gold);
+            color: white;
+            border-color: var(--rose-gold);
+        }
+        .agendamentos-lista {
+            background: white;
+            border-radius: 20px;
+            overflow-x: auto;
+            box-shadow: var(--shadow);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--rose-gold-light);
+        }
+        th {
+            background: var(--rose-gold-light);
+            color: var(--brown-dark);
+            font-weight: 600;
+        }
+        .status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-pendente {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+        .status-confirmado {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+        .status-cancelado {
+            background: #ffebee;
+            color: #f44336;
+        }
+        .btn-acao {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+        .btn-confirmar {
+            background: #4caf50;
+            color: white;
+        }
+        .btn-cancelar {
+            background: #f44336;
+            color: white;
+        }
+        .btn-acao:hover {
+            transform: translateY(-2px);
+        }
+        .sem-agendamentos {
+            text-align: center;
+            padding: 3rem;
+            color: var(--brown);
+        }
+        .refresh-btn {
+            background: var(--rose-gold);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>📋 Painel de Agendamentos - Studio Bela</h1>
+            <a href="/admin/logout" class="logout-btn">🚪 Sair</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total de Solicitações</h3>
+                <div class="number" id="totalCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pendentes</h3>
+                <div class="number" id="pendenteCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Confirmados</h3>
+                <div class="number" id="confirmadoCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Cancelados</h3>
+                <div class="number" id="canceladoCount">0</div>
+            </div>
+        </div>
+
+        <div class="filtros">
+            <button class="filtro-btn active" data-filtro="todos">📋 Todos</button>
+            <button class="filtro-btn" data-filtro="pendente">⏳ Pendentes</button>
+            <button class="filtro-btn" data-filtro="confirmado">✅ Confirmados</button>
+            <button class="filtro-btn" data-filtro="cancelado">❌ Cancelados</button>
+            <button class="refresh-btn" onclick="carregarAgendamentos()">🔄 Atualizar</button>
+        </div>
+
+        <div class="agendamentos-lista">
+            <div id="agendamentosTable">
+                <div class="sem-agendamentos">Carregando...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let todosAgendamentos = [];
+
+        async function carregarAgendamentos() {
+            try {
+                const response = await fetch('/api/agendamentos/todos');
+                const data = await response.json();
+                
+                // Converter objeto para array
+                todosAgendamentos = [];
+                for (const dataStr in data) {
+                    for (const agendamento of data[dataStr]) {
+                        todosAgendamentos.push({
+                            ...agendamento,
+                            data: dataStr
+                        });
+                    }
+                }
+                
+                // Ordenar por data e horário
+                todosAgendamentos.sort((a, b) => {
+                    if (a.data !== b.data) return a.data.localeCompare(b.data);
+                    return a.horario.localeCompare(b.horario);
+                });
+                
+                atualizarStats();
+                aplicarFiltro();
+            } catch (error) {
+                console.error('Erro ao carregar:', error);
+                document.getElementById('agendamentosTable').innerHTML = '<div class="sem-agendamentos">Erro ao carregar agendamentos</div>';
+            }
+        }
+
+        function atualizarStats() {
+            const total = todosAgendamentos.length;
+            const pendentes = todosAgendamentos.filter(a => a.status === 'pendente').length;
+            const confirmados = todosAgendamentos.filter(a => a.status === 'confirmado').length;
+            const cancelados = todosAgendamentos.filter(a => a.status === 'cancelado').length;
+            
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('pendenteCount').textContent = pendentes;
+            document.getElementById('confirmadoCount').textContent = confirmados;
+            document.getElementById('canceladoCount').textContent = cancelados;
+        }
+
+        async function atualizarStatus(id, novoStatus) {
+            try {
+                const response = await fetch(`/api/agendamentos/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status: novoStatus })
+                });
+                
+                if (response.ok) {
+                    await carregarAgendamentos();
+                } else {
+                    alert('Erro ao atualizar status');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao atualizar');
+            }
+        }
+
+        function aplicarFiltro() {
+            const filtroAtivo = document.querySelector('.filtro-btn.active').dataset.filtro;
+            let filtrados = todosAgendamentos;
+            
+            if (filtroAtivo !== 'todos') {
+                filtrados = todosAgendamentos.filter(a => a.status === filtroAtivo);
+            }
+            
+            renderizarTabela(filtrados);
+        }
+
+        function renderizarTabela(agendamentos) {
+            if (agendamentos.length === 0) {
+                document.getElementById('agendamentosTable').innerHTML = '<div class="sem-agendamentos">Nenhum agendamento encontrado</div>';
+                return;
+            }
+            
+            const statusTexto = {
+                'pendente': '⏳ Pendente',
+                'confirmado': '✅ Confirmado',
+                'cancelado': '❌ Cancelado'
+            };
+            
+            const html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Serviço</th>
+                            <th>Status</th>
+                            <th>Solicitado em</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${agendamentos.map(a => `
+                            <tr>
+                                <td>${new Date(a.data).toLocaleDateString('pt-BR')}</td>
+                                <td>${a.horario}</td>
+                                <td>${a.nome}</td>
+                                <td>${a.telefone}</td>
+                                <td>${a.servico}</td>
+                                <td><span class="status status-${a.status}">${statusTexto[a.status]}</span></td>
+                                <td>${new Date(a.timestamp).toLocaleString('pt-BR')}</td>
+                                <td>
+                                    ${a.status === 'pendente' ? `
+                                        <button class="btn-acao btn-confirmar" onclick="atualizarStatus('${a.id}', 'confirmado')">✅ Confirmar</button>
+                                        <button class="btn-acao btn-cancelar" onclick="atualizarStatus('${a.id}', 'cancelado')">❌ Cancelar</button>
+                                    ` : a.status === 'confirmado' ? `
+                                        <button class="btn-acao btn-cancelar" onclick="atualizarStatus('${a.id}', 'cancelado')">❌ Cancelar</button>
+                                    ` : `
+                                        <button class="btn-acao btn-confirmar" onclick="atualizarStatus('${a.id}', 'pendente')">↩️ Reativar</button>
+                                    `}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            document.getElementById('agendamentosTable').innerHTML = html;
+        }
+
+        // Event listeners
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                aplicarFiltro();
+            });
+        });
+
+        // Carregar dados iniciais
+        carregarAgendamentos();
+        
+        // Atualizar automático a cada 30 segundos
+        setInterval(carregarAgendamentos, 30000);
+    </script>
+</body>
+</html>

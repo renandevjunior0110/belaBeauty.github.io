@@ -1,0 +1,850 @@
+/* ===== RESET E CONFIGURAÇÕES GERAIS ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', 'Poppins', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #fff9f5 0%, #fff5f0 100%);
+    color: #5a4a42;
+    line-height: 1.6;
+}
+
+/* ===== VARIÁVEIS DE COR ===== */
+:root {
+    --rose-gold: #d4af8c;
+    --rose-gold-dark: #c19a6b;
+    --rose-gold-light: #f3e5d8;
+    --nude: #e8d9cc;
+    --nude-dark: #d4c2b2;
+    --brown: #8b6b5c;
+    --brown-dark: #6b4e41;
+    --white: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== HEADER ===== */
+header {
+    background: linear-gradient(135deg, var(--white) 0%, var(--rose-gold-light) 100%);
+    padding: 2rem 1rem 1rem;
+    text-align: center;
+    border-bottom: 2px solid var(--rose-gold);
+    box-shadow: var(--shadow);
+}
+
+.topo {
+    margin-bottom: 1.5rem;
+}
+
+.topo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--rose-gold);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.topo img:hover {
+    transform: scale(1.05);
+}
+
+.topo h1 {
+    font-size: 2.5rem;
+    color: var(--brown-dark);
+    margin: 0.5rem 0 0.2rem;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.topo h3 {
+    font-size: 1rem;
+    color: var(--brown);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* ===== NAVEGAÇÃO PRINCIPAL ===== */
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--brown);
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--rose-gold);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav ul li a:hover {
+    color: var(--rose-gold-dark);
+}
+
+nav ul li a:hover::after {
+    width: 80%;
+}
+
+/* ===== SEÇÕES GERAIS ===== */
+.section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.section h2 {
+    font-size: 2rem;
+    color: var(--brown-dark);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+}
+
+.section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--rose-gold);
+    border-radius: 3px;
+}
+
+/* ===== SOBRE ===== */
+#sobre p {
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--brown);
+    line-height: 1.8;
+}
+
+/* ===== SEÇÃO DE SERVIÇOS ===== */
+#Serviços {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+}
+
+#Serviços > nav {
+    margin-bottom: 2rem;
+}
+
+#Serviços > nav ul {
+    gap: 1rem;
+}
+
+#Serviços > nav ul li a {
+    background: var(--rose-gold-light);
+    padding: 0.6rem 1.2rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+#Serviços > nav ul li a:hover {
+    background: var(--rose-gold);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+#Serviços > nav ul li a:hover::after {
+    display: none;
+}
+
+/* Cards de serviços */
+#Serviços .section {
+    margin: 2rem auto;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: 25px;
+    transition: all 0.4s ease;
+    border: 1px solid var(--rose-gold-light);
+}
+
+#Serviços .section:hover {
+    border-color: var(--rose-gold);
+    transform: translateY(-5px) scale(1.01);
+}
+
+#Serviços .section img {
+    width: 280px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+}
+
+#Serviços .section img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+#Serviços .section h3 {
+    flex: 1;
+    min-width: 250px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--brown);
+    line-height: 1.7;
+    text-align: center;
+    padding: 1rem;
+    background: var(--rose-gold-light);
+    border-radius: 20px;
+}
+
+/* Alternância de layout para cards */
+#Serviços .section:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+/* ===== FOOTER / CONTATO ===== */
+footer {
+    background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
+    color: var(--white);
+    padding: 3rem 1.5rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+footer h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--rose-gold-light);
+    position: relative;
+    display: inline-block;
+}
+
+footer h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--rose-gold);
+}
+
+footer p {
+    margin: 0.8rem 0;
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+.redes-sociais {
+    margin-top: 1.5rem;
+}
+
+.redes-sociais a {
+    color: var(--rose-gold-light);
+    text-decoration: none;
+    margin: 0 0.8rem;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.redes-sociais a:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ===== WHATSAPP FLUTUANTE ===== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-float img {
+    width: 35px;
+    height: 35px;
+    
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    .topo h1 {
+        font-size: 1.8rem;
+    }
+    
+    nav ul {
+        gap: 1rem;
+    }
+    
+    nav ul li a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .section {
+        margin: 1.5rem;
+        padding: 1.5rem;
+    }
+    
+    #Serviços .section {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    
+    #Serviços .section img {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+    }
+    
+    #Serviços .section h3 {
+        font-size: 0.95rem;
+    }
+    
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .whatsapp-float img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .redes-sociais a {
+        margin: 0 0.3rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .topo h1 {
+        font-size: 1.4rem;
+    }
+    
+    .section h2 {
+        font-size: 1.5rem;
+    }
+    
+    #sobre p {
+        font-size: 0.95rem;
+    }
+    
+    footer p {
+        font-size: 0.85rem;
+    }
+}
+
+/* ===== ANIMAÇÕES ADICIONAIS ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Estilo para links ativos na navegação */
+nav ul li a.active {
+    color: var(--rose-gold-dark);
+    font-weight: 600;
+}
+
+nav ul li a.active::after {
+    width: 80%;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--rose-gold-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--rose-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--rose-gold-dark);
+}
+
+/* ===== AGENDAMENTO ===== */
+.agendamento-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.servico-selector {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.servico-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--brown-dark);
+}
+
+.select-servico {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px 20px;
+    border: 2px solid var(--rose-gold-light);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: var(--white);
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.select-servico:hover {
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 140, 0.2);
+}
+
+.select-servico:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+}
+
+/* Calendário */
+.calendario-wrapper {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+}
+
+.calendario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calendario-header h3 {
+    font-size: 1.3rem;
+    color: var(--brown-dark);
+}
+
+.cal-nav-btn {
+    background: var(--rose-gold-light);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--brown);
+    transition: all 0.3s ease;
+}
+
+.cal-nav-btn:hover {
+    background: var(--rose-gold);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+.calendario-dias-semana {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--brown);
+}
+
+.calendario-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.dia {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    background: var(--rose-gold-light);
+    color: var(--brown);
+}
+
+.dia:hover:not(.dia-indisponivel):not(.dia-selecionado) {
+    background: var(--rose-gold);
+    color: var(--white);
+    transform: scale(1.05);
+}
+
+.dia-indisponivel {
+    background: #e0d6cf;
+    color: #b0a096;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.dia-outro-mes {
+    opacity: 0.3;
+    cursor: default;
+    background: #f5f0eb;
+}
+
+.dia-outro-mes:hover {
+    transform: none;
+    background: #f5f0eb;
+}
+
+.dia-selecionado {
+    background: var(--rose-gold);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(212, 175, 140, 0.4);
+    transform: scale(1.02);
+}
+
+/* Horários */
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.horario-btn {
+    padding: 10px;
+    border: 2px solid var(--rose-gold-light);
+    background: var(--white);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    color: var(--brown);
+    font-weight: 500;
+}
+
+.horario-btn:hover:not(.horario-ocupado) {
+    background: var(--rose-gold);
+    color: var(--white);
+    border-color: var(--rose-gold);
+    transform: translateY(-2px);
+}
+
+.horario-selecionado {
+    background: var(--rose-gold);
+    color: var(--white);
+    border-color: var(--rose-gold);
+    box-shadow: 0 4px 12px rgba(212, 175, 140, 0.3);
+}
+
+.horario-ocupado {
+    background: #f0e8e2;
+    border-color: #d4c2b2;
+    color: #b0a096;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Inputs do cliente */
+.cliente-dados {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--rose-gold-light);
+    border-radius: 20px;
+}
+
+.cliente-dados h3 {
+    color: var(--brown-dark);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.input-dados {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 1rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.input-dados:focus {
+    outline: none;
+    border-color: var(--rose-gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 140, 0.2);
+}
+
+.btn-agendar {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--rose-gold) 0%, var(--rose-gold-dark) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-agendar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 140, 0.4);
+}
+
+.btn-agendar:active {
+    transform: translateY(0);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: var(--white);
+    max-width: 450px;
+    width: 90%;
+    padding: 2rem;
+    border-radius: 25px;
+    text-align: center;
+    position: relative;
+    animation: slideInUp 0.4s ease;
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--brown);
+    transition: all 0.3s ease;
+}
+
+.modal-fechar:hover {
+    color: var(--rose-gold-dark);
+    transform: rotate(90deg);
+}
+
+.btn-whatsapp-confirm {
+    background: #25d366;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1rem 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+}
+
+.btn-fechar {
+    background: var(--rose-gold-light);
+    color: var(--brown);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-fechar:hover {
+    background: var(--rose-gold);
+    color: var(--white);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Efeito ripple para botões */
+.btn-agendar, .horario-btn, .cal-nav-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes rippleAnim {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* ===== BOTÃO DE ACESSO ADMIN (DISCRETO) ===== */
+.admin-access {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 999;
+}
+
+.btn-admin-acesso {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(212, 175, 140, 0.3);
+    border: 2px solid var(--rose-gold);
+    color: var(--rose-gold-dark);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.btn-admin-acesso:hover {
+    background: var(--rose-gold);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(212, 175, 140, 0.4);
+}
+
+/* Ajuste para o WhatsApp não atrapalhar */
+@media (max-width: 768px) {
+    .admin-access {
+        bottom: 90px;
+        right: 20px;
+    }
+    .btn-admin-acesso {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
